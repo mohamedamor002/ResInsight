@@ -1,0 +1,20 @@
+{
+  "name": "resinsight",
+  "version": "1.0.0",
+  "description": "",
+  "main": "tailwind.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mohamedamor002/ResInsight.git"
+  },
+  "private": true,
+  "dependencies": {
+    "flowbite": "^2.4.1"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.7"
+  }
+}
