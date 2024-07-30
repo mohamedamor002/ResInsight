@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}Resume Insights{% endblock %}
+
+{% block content %}
+<div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+    <h1 class="text-xl font-bold">Resume Insights</h1>
+    <p>Name: {{ insights.name }}</p>
+    <p>Skills: {{ insights.skills | join(', ') }}</p>
+</div>
+{% endblock %}
