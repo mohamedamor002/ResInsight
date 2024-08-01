@@ -1,6 +1,7 @@
 import spacy
 from spacy.language import Language
 from spacy.tokens import Doc
+import sys
 
 MODEL_NAME = "model"
 model: Language | None = None
@@ -26,10 +27,12 @@ type ResumeRecord = dict[str, list[str]]
 
 def _doc_to_record(doc: Doc) -> ResumeRecord:
     ents = [(ent.label_, ent.text) for ent in doc.ents]
-    insights: ResumeRecord = {}
+    labels = _model_labels()
+    insights: ResumeRecord = {label: [] for label in labels}
     for label, ent in ents:
-        if label not in insights:
-            insights[label] = []
+        if label not in labels:
+            print(f"Unknown label: {label}", file=sys.stderr)
+            continue
         insights[label].append(ent)
     return insights
 
