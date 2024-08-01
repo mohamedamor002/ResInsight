@@ -17,6 +17,10 @@ def _get_model():
     return model
 
 
+def _model_labels():
+    return [label for label in _get_model().pipe_labels["ner"] if label != "UNKNOWN"]
+
+
 type ResumeRecord = dict[str, list[str]]
 
 
