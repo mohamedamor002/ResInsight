@@ -17,7 +17,7 @@ def _get_model():
     return model
 
 
-ResumeRecord = dict[str, list[str]]
+type ResumeRecord = dict[str, list[str]]
 
 
 def _doc_to_record(doc: Doc) -> ResumeRecord:
