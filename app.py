@@ -41,7 +41,7 @@ def upload_file():
 
     text = pdf_extraction.pdf_to_text(file)
     insights  = parsing_model.parse_resume(text)
-    if turbo:
+    if turbo.can_stream():
         return turbo.stream(
             (
                 turbo.update(
