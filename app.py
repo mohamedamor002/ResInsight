@@ -1,14 +1,10 @@
 from flask import Flask, request, render_template
 from turbo_flask import Turbo
-import os
 import parsing_model
 import pdf_extraction
 
 app = Flask(__name__)
 turbo = Turbo(app)
-app.config['UPLOAD_FOLDER'] = 'uploads'
-os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
-
 
 @app.get('/')
 def index():
