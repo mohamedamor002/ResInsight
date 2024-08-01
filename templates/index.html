@@ -21,8 +21,20 @@
                 </div>
             </form>
             <div id="preview" class="mt-4"></div>
-            <div id="error"></div>
-            <div id="insights"></div>
+            <div id="error">
+              {% if upload_error is defined %}
+                {% with message=upload_error %}
+                  {% include "error.html" %}
+                {% endwith %}
+              {% endif %}
+            </div>
+            <div id="insights">
+              {% if insights is defined %}
+                {% with insights=insights %}
+                  {% include "insights.html" %}
+                {% endwith %}
+              {% endif %}
+            </div>
         </div>
     </div>
 </div>

@@ -1,11 +1,8 @@
-{% extends 'base.html' %}
-
-{% block title %}Resume Insights{% endblock %}
-
-{% block content %}
+{% for label,fields in insights.items() %}
 <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
-    <h1 class="text-xl font-bold">Resume Insights</h1>
-    <p>Name: {{ insights.name }}</p>
-    <p>Skills: {{ insights.skills | join(', ') }}</p>
+    <h1 class="text-xl font-bold">{{label}}</h1>
+    {% for field in fields %}
+      <p>{{field}}</p>
+    {% endfor %}
 </div>
-{% endblock %}
+{% endfor %}

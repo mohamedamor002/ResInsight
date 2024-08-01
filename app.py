@@ -1,6 +1,8 @@
-from flask import Flask, request, render_template, redirect, url_for
+from flask import Flask, request, render_template
 from turbo_flask import Turbo
 import os
+import parsing_model
+import pdf_extraction
 
 app = Flask(__name__)
 turbo = Turbo(app)
@@ -13,24 +15,45 @@ def index():
     return render_template('index.html')
 
 
+UNPROCESSABLE_ENTITY = 422
+
+def form_error(template: str, **context):
+    return render_template(template, **context), UNPROCESSABLE_ENTITY
+
+
 @app.post('/upload')
 def upload_file():
+
+    upload_error: str | None = None
+
     if 'file' not in request.files:
-        return turbo.stream(turbo.append(render_template('error.html', message="No file part"), target='error'))
+        upload_error = "No file part."
+        return form_error('index.html', upload_error=upload_error)
+
     file = request.files['file']
     if file.filename == '':
-        return turbo.stream(turbo.append(render_template('error.html', message="No selected file"), target='error'))
-    if file:
-        filepath = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
-        file.save(filepath)
-        insights = process_resume(filepath)
-        return turbo.stream(turbo.append(render_template('insights.html', insights=insights), target='insights'))
+        upload_error = "No uploaded file."
+        return form_error('index.html', upload_error=upload_error)
 
+    if file.content_type != 'application/pdf':
+        upload_error = "File must be a PDF."
+        return form_error('index.html', upload_error=upload_error)
 
-def process_resume(filepath):
-    insights = {"name": "John Doe", "skills": ["Python", "Flask", "AI"]}
-    return insights
-
+    text = pdf_extraction.pdf_to_text(file)
+    insights  = parsing_model.parse_resume(text)
+    if turbo:
+        return turbo.stream(
+            (
+                turbo.update(
+                    render_template("insights.html", insights=insights), "insights"
+                ),
+                turbo.update("", "error"),
+            )
+        )
+    return render_template(
+        "index.html",
+        insights=insights
+    )
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
