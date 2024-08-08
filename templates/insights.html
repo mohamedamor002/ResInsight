@@ -1,15 +1,13 @@
-{% block content %}
-    <div class="container mx-auto mt-10 bg-gray-200 bg-opacity-50 p-6 rounded-lg">
-        <h1 class="text-2xl font-bold mb-6 text-center">Resume Insights</h1>
-        <div class="flex flex-col items-center gap-6">
-            {% for label, fields in insights.items() %}
-                <div class="w-full max-w-2xl bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
-                    <div class="p-5">
-                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ label }}</h5>
-                        {% for field in fields %}<p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ field }}</p>{% endfor %}
-                    </div>
+<div class="container mx-auto mt-10 bg-gray-200 bg-opacity-50 p-6 rounded-lg">
+    <h1 class="text-2xl font-bold mb-6 text-center">Resume Insights</h1>
+    <div class="flex flex-col items-center gap-6">
+        {% for label, fields in insights.items() %}
+            <div class="w-full max-w-2xl bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
+                <div class="p-5">
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ label }}</h5>
+                    {% for field in fields %}<p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ field }}</p>{% endfor %}
                 </div>
-            {% endfor %}
-        </div>
+            </div>
+        {% endfor %}
     </div>
-{% endblock %}
+</div>
